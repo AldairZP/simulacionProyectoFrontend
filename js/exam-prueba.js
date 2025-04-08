@@ -11,7 +11,7 @@ let currentQuestionIndex = 0; // Índice de la pregunta actual
 let userAnswers = {}; // Almacena las respuestas del usuario
 
 async function fetchCSRFToken() {
-    const response = await fetch("https://104.197.151.60/csrf/", {
+    const response = await fetch("https://aldair.site/csrf/", {
         credentials: "include", // Importante para recibir cookies del backend
     });
     const data = await response.json();
@@ -23,7 +23,7 @@ async function crearExamen() {
     try {
         const csrfToken = await fetchCSRFToken();
         
-        const response = await fetch("https://104.197.151.60/get_exam_questions/", {
+        const response = await fetch("https://aldair.site/get_exam_questions/", {
             method: "POST",
             credentials: "include",
             headers: {
@@ -49,7 +49,7 @@ async function fetchQuestionData(examId, questionId) {
     try {
         const csrfToken = await fetchCSRFToken();
         
-        const response = await fetch("https://104.197.151.60/get_questions_answers/", {
+        const response = await fetch("https://aldair.site/get_questions_answers/", {
             method: "PATCH",
             credentials: "include",
             headers: {
@@ -78,7 +78,7 @@ async function submitAnswer(examId, questionId, answerId) {
     try {
         const csrfToken = await fetchCSRFToken();
         
-        const response = await fetch("https://104.197.151.60/update_exam_answer/", {
+        const response = await fetch("https://aldair.site/update_exam_answer/", {
             method: "PATCH",
             credentials: "include",
             headers: {
@@ -265,7 +265,7 @@ async function fetchExamInfo(examId) {
     try {
         const csrfToken = await fetchCSRFToken();
         
-        const response = await fetch("https://104.197.151.60/exam_info/", {
+        const response = await fetch("https://aldair.site/exam_info/", {
             method: "POST",
             credentials: "include",
             headers: {
