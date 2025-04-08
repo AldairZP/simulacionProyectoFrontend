@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 // Función para verificar si el usuario está autenticado
 function checkAuthentication() {
-    fetch('https://104.197.151.60/user_info/', {
+    fetch('https://aldair.site/user_info/', {
         method: 'GET',
         credentials: 'include',
         headers: {
@@ -34,7 +34,7 @@ function checkAuthentication() {
 // Función para cargar los datos del perfil
 async function loadProfileData() {
     try {
-        const response = await fetch('https://104.197.151.60/user_info/', {
+        const response = await fetch('https://aldair.site/user_info/', {
             method: 'GET',
             credentials: 'include',
             headers: {
@@ -98,7 +98,7 @@ async function uploadProfileImage(file) {
         
         const csrfToken = await getCSRFToken();
         
-        const response = await fetch('https://104.197.151.60/update_profile_image/', {
+        const response = await fetch('https://aldair.site/update_profile_image/', {
             method: 'POST',
             credentials: 'include',
             headers: {
