@@ -20,7 +20,7 @@ async function submitForm(event) {
             method: "POST",
             credentials: "include", // Importante para enviar cookies
             headers: {
-                "X-Csrftoken": csrfToken, // Agregar el token CSRF
+                "X-CSRFToken": csrfToken, // Agregar el token CSRF
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(formObject), // Enviar como JSON
@@ -61,7 +61,7 @@ async function submitLoginForm(event) {
             method: "POST",
             credentials: "include", // Importante para enviar cookies
             headers: {
-                "X-Csrftoken": csrfToken, // Agregar el token CSRF
+                "X-CSRFToken": csrfToken, // Agregar el token CSRF
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(formObject), // Enviar como JSON
