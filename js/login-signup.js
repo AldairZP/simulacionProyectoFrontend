@@ -1,5 +1,5 @@
 async function fetchCSRFToken() {
-    const response = await fetch("http://104.197.151.60/csrf/", {
+    const response = await fetch("https://104.197.151.60/csrf/", {
         credentials: "include", // Importante para recibir cookies del backend
     });
     const data = await response.json();
@@ -16,7 +16,7 @@ async function submitForm(event) {
     console.log(JSON.stringify(formObject));
     
     try {
-        const response = await fetch("http://104.197.151.60/register/", {
+        const response = await fetch("https://104.197.151.60/register/", {
             method: "POST",
             credentials: "include", // Importante para enviar cookies
             headers: {
@@ -57,7 +57,7 @@ async function submitLoginForm(event) {
     console.log(JSON.stringify(formObject));
     
     try {
-        const response = await fetch("http://104.197.151.60/login/", {
+        const response = await fetch("https://104.197.151.60/login/", {
             method: "POST",
             credentials: "include", // Importante para enviar cookies
             headers: {
