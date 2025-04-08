@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Función para verificar si el usuario está autenticado
 function checkAuthentication() {
-    fetch('https://104.197.151.60/user_info/', {
+    fetch('https://aldair.site/user_info/', {
         method: 'GET',
         credentials: 'include',
         headers: {
@@ -35,7 +35,7 @@ function checkAuthentication() {
 
 // Función para obtener intentos disponibles de exámenes
 function fetchAvailableExams() {
-    fetch('https://104.197.151.60/available_exams/', {
+    fetch('https://aldair.site/available_exams/', {
         method: 'GET',
         credentials: 'include',
         headers: {
