@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // Función para verificar autenticación
 async function checkAuthentication() {
     try {
-        const response = await fetch('https://104.197.151.60/user_info/', {
+        const response = await fetch('https://aldair.site/user_info/', {
             method: 'GET',
             credentials: 'include',
             headers: {'Content-Type': 'application/json'}
@@ -54,7 +54,7 @@ async function loadUserData() {
 // Función para cargar resultados de exámenes
 async function loadExamResults() {
     try {
-        const response = await fetch('https://104.197.151.60/user_exams/', {
+        const response = await fetch('https://aldair.site/user_exams/', {
             method: 'GET',
             credentials: 'include',
             headers: {'Content-Type': 'application/json'}
