@@ -6,7 +6,7 @@ const state = {
 };
 
 async function getCSRFToken() {
-    const fetchCSRFToken = await fetch('https://104.197.151.60/csrf/');
+    const fetchCSRFToken = await fetch('https://aldair.site/csrf/');
     if (fetchCSRFToken.ok) {
         const data = await fetchCSRFToken.json();
         return data.csrfToken;
@@ -18,7 +18,7 @@ async function getCSRFToken() {
 
 async function fetchLogout() {
     try {
-        const response = await fetch('https://104.197.151.60/logout/', {
+        const response = await fetch('https://aldair.site/logout/', {
             method: 'GET',
             credentials: 'include', // Importante para enviar cookies del backend
             headers: {
@@ -40,7 +40,7 @@ async function fetchLogout() {
 
 async function fetchDataUser() {
     try {
-        const response = await fetch('https://104.197.151.60/user_info/',{
+        const response = await fetch('https://aldair.site/user_info/',{
             method: 'GET',
             credentials: 'include', // Importante para recibir cookies del backend
             headers: {
