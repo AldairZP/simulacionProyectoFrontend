@@ -70,10 +70,9 @@ function showUserInfo(data) {
 
     // Mostrar el nombre de usuario en el elemento correspondiente
     if (userName) {
+        console.log(data)
         // Usar la propiedad correcta según el formato de datos
-        if (data.nickname) {
-            userName.textContent = data.nickname;
-        } else if (data.username) {
+        if (data.username) {
             userName.textContent = data.username;
         } else if (data.name) {
             userName.textContent = data.name;
