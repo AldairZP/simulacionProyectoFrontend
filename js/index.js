@@ -1,12 +1,21 @@
-if (window.location.pathname.includes('index.html') || window.location.pathname === '/' || window.location.pathname === '/PruebaWeb/') {
-    const startExamBtn = document.getElementById('startExamBtn');
-    if (startExamBtn) {
-      startExamBtn.addEventListener('click', () => {
-        if (state.isLoggedIn) {
-          navigateTo('exams.html');
-        } else {
-          navigateTo('login-signup.html');
+async function fetchDataUser() {
+    try {
+        const response = await fetch('https://aldair.site/user_info/', {
+            method: 'GET',
+            credentials: 'include'
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            return !!data.username; // Devuelve true si está logueado
         }
-      });
+    } catch (error) {
+        console.error('Error al verificar sesión:', error);
     }
-  }
+    return false;
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+    const isLoggedIn = await fetchDataUser();
+    navigateTo(isLoggedIn ? 'exams.html' : 'login-signup.html');
+});
