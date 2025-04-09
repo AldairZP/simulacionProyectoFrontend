@@ -21,7 +21,8 @@
   font-size: 1rem;
   font-weight: 700;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-  max-width: 300px;
+  max-width: 400px;
+  margin: auto;
 }
 
 .results-button {
@@ -50,7 +51,7 @@
   margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
-  gap: 2rem;
+  gap: 5rem;
   padding: 0 1rem;
 }
 
@@ -63,7 +64,7 @@
   transition: transform 0.3s ease;
   margin: auto;
   position: relative;
-  width:250;
+  width: 250px;
 }
 
 .exam-card:hover {
