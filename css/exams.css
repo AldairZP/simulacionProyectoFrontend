@@ -21,6 +21,7 @@
   font-size: 1rem;
   font-weight: 700;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  max-width: 300px;
 }
 
 .results-button {
@@ -47,8 +48,8 @@
 .exam-container {
   max-width: 1200px;
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
   gap: 2rem;
   padding: 0 1rem;
 }
@@ -60,10 +61,9 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   text-align: center;
   transition: transform 0.3s ease;
-  margin-right: 50px;
-  margin-top: 100px;
-  margin-bottom: 50px;
+  margin: auto;
   position: relative;
+  width:250;
 }
 
 .exam-card:hover {
