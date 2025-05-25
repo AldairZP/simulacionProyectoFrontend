@@ -1,3 +1,24 @@
+// Función para obtener una imagen de perfil aleatoria
+function getRandomProfileImage() {
+    const profileImages = [
+        'https://i.imgur.com/KqW2OTQ_d.webp?maxwidth=760&fidelity=grand',
+        'https://i.imgur.com/Xw7fvhF_d.webp?maxwidth=760&fidelity=grand',
+        'https://i.imgur.com/pTkv30n_d.webp?maxwidth=760&fidelity=grand',
+        'https://i.imgur.com/1KsedPW_d.webp?maxwidth=760&fidelity=grand'
+    ];
+    
+    // Verificar si ya existe una imagen en sessionStorage para mantener consistencia
+    let selectedImage = sessionStorage.getItem('userProfileImage');
+    if (!selectedImage) {
+        // Si no existe, seleccionar una aleatoria y guardarla
+        const randomIndex = Math.floor(Math.random() * profileImages.length);
+        selectedImage = profileImages[randomIndex];
+        sessionStorage.setItem('userProfileImage', selectedImage);
+    }
+    
+    return selectedImage;
+}
+
 document.addEventListener('DOMContentLoaded', async () => {
     // Verificar si el usuario está autenticado
     checkAuthentication();
@@ -64,11 +85,22 @@ function updateProfileUI(userData) {
     document.getElementById('profileLastName2').textContent = userData.materno || '';
     document.getElementById('profileEmail').textContent = userData.email || '';
     
-    // Si hay una imagen de perfil, actualizarla
+    // Actualizar imagen de perfil
+    const profileImage = document.getElementById('profileImage');
+    const userProfileImg = document.getElementById('userProfileImg');
+    
+    let imageUrl;
     if (userData.profile_image) {
-        document.getElementById('profileImage').src = userData.profile_image;
-        document.getElementById('userProfileImg').src = userData.profile_image;
+        imageUrl = userData.profile_image;
+        // Guardar la imagen del backend en sessionStorage
+        sessionStorage.setItem('userProfileImage', imageUrl);
+    } else {
+        // Si no hay imagen del backend, obtener una aleatoria (que ya está en sessionStorage)
+        imageUrl = sessionStorage.getItem('userProfileImage') || getRandomProfileImage();
     }
+    
+    if (profileImage) profileImage.src = imageUrl;
+    if (userProfileImg) userProfileImg.src = imageUrl;
 }
 
 // Función para configurar la subida de imágenes

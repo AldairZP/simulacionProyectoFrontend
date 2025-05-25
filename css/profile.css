@@ -3,7 +3,8 @@
   min-height: 100vh;
   padding-top: 100px;
   padding-bottom: 2rem;
-  background-color: var(--background-color);
+  background: linear-gradient(to bottom, var(--secundary-color-light), var(--primary-color));
+  /* background-color: var(--background-color); */
 }
 
 .profile-container {

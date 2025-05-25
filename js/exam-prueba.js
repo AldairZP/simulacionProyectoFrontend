@@ -158,26 +158,32 @@ async function displayCurrentQuestion() {
     }
     
     const questionContainer = document.getElementById('pruebaQuestions');
-    
-    // Crear HTML de la pregunta
+      // Crear HTML de la pregunta
     let questionHTML = `
         <div class="question" data-question-id="${questionData.id}">
             <h3 class="question-text">${questionData.descripcion}</h3>
-            <div class="answers-container">
     `;
     
-    // Añadir cada opción de respuesta
-    questionData.respuestas.forEach(answer => {
+    // Añadir imagen si existe
+    if (questionData.imagen) {
+        questionHTML += `<img src="${questionData.imagen}" alt="Imagen de la pregunta" class="question-image">`;
+    }
+    
+    questionHTML += `
+            <div class="answers-container">
+    `;      // Añadir cada opción de respuesta
+    questionData.respuestas.forEach((answer, index) => {
         const isSelected = userAnswers[questionId] === answer.id;
+        const optionLetter = String.fromCharCode(65 + index); // A, B, C, D
         questionHTML += `
-            <div class="answer-option ${isSelected ? 'selected' : ''}">
+            <label class="answer-option ${isSelected ? 'selected' : ''}" for="answer-${answer.id}">
                 <input type="radio" 
                        id="answer-${answer.id}" 
                        name="question-${questionData.id}" 
                        value="${answer.id}"
                        ${isSelected ? 'checked' : ''}>
-                <label for="answer-${answer.id}">${answer.descripcion}</label>
-            </div>
+                <strong>${optionLetter})</strong> ${answer.descripcion}
+            </label>
         `;
     });
     
@@ -188,14 +194,32 @@ async function displayCurrentQuestion() {
             </div>
         </div>
     `;
+      questionContainer.innerHTML = questionHTML;
     
-    questionContainer.innerHTML = questionHTML;
-    
-    // Añadir event listeners a los radio buttons
+    // Añadir event listeners a los radio buttons y labels
     const radioButtons = questionContainer.querySelectorAll('input[type="radio"]');
+    const answerOptions = questionContainer.querySelectorAll('.answer-option');
+    
     radioButtons.forEach(radio => {
         radio.addEventListener('change', (event) => {
             userAnswers[questionId] = parseInt(event.target.value);
+            
+            // Actualizar clases selected
+            answerOptions.forEach(option => {
+                option.classList.remove('selected');
+            });
+            event.target.closest('.answer-option').classList.add('selected');
+        });
+    });
+    
+    // Event listeners para hacer clicable toda el área
+    answerOptions.forEach(option => {
+        option.addEventListener('click', (event) => {
+            const radio = option.querySelector('input[type="radio"]');
+            if (radio && !radio.checked) {
+                radio.checked = true;
+                radio.dispatchEvent(new Event('change'));
+            }
         });
     });
     

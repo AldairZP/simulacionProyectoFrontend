@@ -3,7 +3,7 @@
   min-height: 100vh;
   padding-top: 100px;
   padding-bottom: 2rem;
-  background-color: var(--background-color);
+  background: linear-gradient(to bottom, var(--secundary-color-light), var(--primary-color));
 }
 
 .exam-questions-container {
@@ -18,7 +18,6 @@
 .submit-exam-button {
   width: 100%;
   padding: 1rem;
-  margin-top: 2rem;
   background-color: var(--primary-color);
   color: var(--white);
   border: none;
@@ -99,6 +98,80 @@
 .exit-exam-button:hover {
   background-color: var(--primary-color);
   transform: translateY(-2px);
+}
+
+/* Estilos para las preguntas */
+.question {
+  margin-bottom: 2rem;
+}
+
+.question-text {
+  margin-bottom: 1.5rem;
+  color: var(--text-color);
+  font-size: 1.2rem;
+}
+
+.question-image {
+  display: block;
+  margin: 1.5rem auto;
+  max-width: 100%;
+  height: 200px; /* Altura fija */
+  width: auto; /* Ancho variable manteniendo proporción */
+  object-fit: contain; /* Mantener proporción sin recortar */
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background-color: #f8f9fa;
+}
+
+.answers-container {
+  margin-top: 1.5rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.answer-option {
+  display: block;
+  width: 100%;
+  margin: 0.3rem 0;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background-color: #fff;
+  position: relative;
+  overflow: hidden;
+  padding: 0.3rem;
+  box-sizing: border-box;
+}
+
+.answer-option:hover {
+  border-color: var(--primary-color);
+  background-color: #f0f9ff;
+}
+
+.answer-option.selected {
+  border-color: var(--primary-color);
+  background-color: #dbeafe;
+}
+
+.answer-option strong {
+  color: var(--primary-color);
+  margin-right: 0.5rem;
+  font-weight: 600;
+}
+.answer-option input[type="radio"] {
+  margin-right: 0.75rem;
+  cursor: pointer;
+  margin-top: 0.1rem;
+}
+
+.question-counter {
+  text-align: center;
+  margin-top: 1.5rem;
+  font-weight: bold;
+  color: var(--secondary-color);
+  font-size: 1.1rem;
 }
 
 .exam-error {

@@ -1,3 +1,41 @@
+// Función para obtener una imagen de perfil aleatoria
+function getRandomProfileImage() {
+    const profileImages = [
+        'https://i.imgur.com/KqW2OTQ_d.webp?maxwidth=760&fidelity=grand',
+        'https://i.imgur.com/Xw7fvhF_d.webp?maxwidth=760&fidelity=grand',
+        'https://i.imgur.com/pTkv30n_d.webp?maxwidth=760&fidelity=grand',
+        'https://i.imgur.com/1KsedPW_d.webp?maxwidth=760&fidelity=grand'
+    ];
+    
+    // Verificar si ya existe una imagen en sessionStorage para mantener consistencia
+    let selectedImage = sessionStorage.getItem('userProfileImage');
+    if (!selectedImage) {
+        // Si no existe, seleccionar una aleatoria y guardarla
+        const randomIndex = Math.floor(Math.random() * profileImages.length);
+        selectedImage = profileImages[randomIndex];
+        sessionStorage.setItem('userProfileImage', selectedImage);
+    }
+    
+    return selectedImage;
+}
+
+// Función para inicializar la imagen de perfil en todas las páginas
+function initializeProfileImage() {
+    const profileImages = document.querySelectorAll('#userProfileImg, #profileImage, #resultProfileImage');
+    
+    profileImages.forEach(img => {
+        // Solo actualizar si la imagen todavía tiene la imagen por defecto
+        if (img && (img.src.includes('sinfoto.png') || img.src === '')) {
+            const savedImage = sessionStorage.getItem('userProfileImage');
+            if (savedImage) {
+                img.src = savedImage;
+            } else {
+                img.src = getRandomProfileImage();
+            }
+        }
+    });
+}
+
 const profileMenu = document.getElementById('profileMenu');
 // Definición del estado global de la aplicación
 const state = {
@@ -30,6 +68,8 @@ async function fetchLogout() {
             console.log('Logout exitoso');
             state.isLoggedIn = false;
             state.currentUser = null;
+            // Limpiar la imagen de perfil guardada
+            sessionStorage.removeItem('userProfileImage');
         } else {
             console.error('Error al cerrar sesión:', response.statusText);
         }
@@ -40,18 +80,21 @@ async function fetchLogout() {
 
 async function fetchDataUser() {
     try {
+        console.log('Obteniendo información del usuario...');
         const response = await fetch('https://aldair.site/user_info/',{
             method: 'GET',
             credentials: 'include', // Importante para recibir cookies del backend
             headers: {
-                'X-CSRFToken': await getCSRFToken(), // Agregar el token CSRF
                 'Content-Type': 'application/json',
             },
         });
+        
         if (response.ok) {
             const data = await response.json();
+            console.log('Datos del usuario obtenidos:', data);
             return data;
         } else {
+            console.log('Usuario no autenticado, status:', response.status);
             return null;
         }
     } catch (error) {
@@ -64,20 +107,39 @@ function showUserInfo(data) {
     const buttonLogin = document.getElementById('loginBtn');
     const userProfile = document.getElementById('userProfile');
     const userName = document.getElementById('userName');
+    const userProfileImg = document.getElementById('userProfileImg');
 
     if (buttonLogin) buttonLogin.classList.add('hidden'); // Hide the login button
     if (userProfile) userProfile.classList.remove('hidden'); // Show the user profile section
 
     // Mostrar el nombre de usuario en el elemento correspondiente
     if (userName) {
-        console.log(data)
-        // Usar la propiedad correcta según el formato de datos
+        console.log('Datos del usuario:', data);
+        
+        // Intentar diferentes formas de obtener el nombre
+        let displayName = 'Usuario'; // Valor por defecto
+        
         if (data.username) {
-            userName.textContent = data.username;
+            displayName = data.username;
+        } else if (data.nombre) {
+            // Si no hay username, usar el nombre completo
+            displayName = `${data.nombre} ${data.paterno || ''}`.trim();
         } else if (data.name) {
-            userName.textContent = data.name;
+            displayName = data.name;
+        }
+        
+        userName.textContent = displayName;
+        console.log('Nombre mostrado:', displayName);
+    }
+      // Actualizar imagen de perfil
+    if (userProfileImg) {
+        if (data.profile_image) {
+            userProfileImg.src = data.profile_image;
+            // Guardar la imagen del backend en sessionStorage
+            sessionStorage.setItem('userProfileImage', data.profile_image);
         } else {
-            userName.textContent = "Usuario";
+            // Si no hay imagen del backend, usar una aleatoria
+            userProfileImg.src = getRandomProfileImage();
         }
     }
     
@@ -92,10 +154,16 @@ function navigateTo(page) {
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
+    console.log('Base.js cargado, verificando autenticación...');
+    
     // Hacer petición al servidor para obtener datos del usuario
     const data = await fetchDataUser();
+    
     if (data) {
+        console.log('Usuario autenticado, mostrando información');
         showUserInfo(data);
+    } else {
+        console.log('Usuario no autenticado');
     }
 
     // Event listeners para el menú de perfil
@@ -154,5 +222,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             navigateTo('login-signup.html');
         });
     }
+
+    // Inicializar imágenes de perfil
+    initializeProfileImage();
 });
 

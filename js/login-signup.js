@@ -13,6 +13,34 @@ async function submitForm(event) {
     // Convertir los datos del formulario en un objeto JSON
     const formData = new FormData(event.target);
     const formObject = Object.fromEntries(formData.entries()); // Convierte FormData en JSON
+    
+    // Convertir a minúsculas todos los campos excepto username y contraseña
+    const fieldsToKeepOriginal = ['username', 'contraseña'];
+    Object.keys(formObject).forEach(key => {
+        if (!fieldsToKeepOriginal.includes(key)) {
+            formObject[key] = formObject[key].toLowerCase();
+        }
+    });
+    
+    // Asignar una imagen de perfil aleatoria
+    const profileImages = [
+        'https://i.imgur.com/KqW2OTQ_d.webp?maxwidth=760&fidelity=grand',
+        'https://i.imgur.com/Xw7fvhF_d.webp?maxwidth=760&fidelity=grand',
+        'https://i.imgur.com/pTkv30n_d.webp?maxwidth=760&fidelity=grand',
+        'https://i.imgur.com/1KsedPW_d.webp?maxwidth=760&fidelity=grand'
+    ];
+    
+    // Verificar si ya existe una imagen en sessionStorage para mantener consistencia
+    let selectedImage = sessionStorage.getItem('userProfileImage');
+    if (!selectedImage) {
+        // Si no existe, seleccionar una aleatoria y guardarla
+        const randomIndex = Math.floor(Math.random() * profileImages.length);
+        selectedImage = profileImages[randomIndex];
+        sessionStorage.setItem('userProfileImage', selectedImage);
+    }
+    
+    formObject.profile_image = selectedImage;
+    
     console.log(JSON.stringify(formObject));
     
     try {
@@ -54,6 +82,12 @@ async function submitLoginForm(event) {
     // Convertir los datos del formulario en un objeto JSON
     const formData = new FormData(event.target);
     const formObject = Object.fromEntries(formData.entries()); // Convierte FormData en JSON
+    
+    // Convertir el email a minúsculas
+    if (formObject.email) {
+        formObject.email = formObject.email.toLowerCase();
+    }
+    
     console.log(JSON.stringify(formObject));
     
     try {

@@ -14,7 +14,7 @@ body{
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: linear-gradient(90deg, #F5F8FC, #e9edf2);
+    background: linear-gradient(to bottom, var(--secundary-color-light), var(--primary-color));
 }
 
 .container{
