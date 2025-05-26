@@ -180,6 +180,25 @@ form{ width: 100%; }
             bottom: 30%;
         }
 
+    .input-box{
+        margin: 8px 0;
+    }
+
+    .input-box input{
+        padding: 10px 40px 10px 15px;
+        font-size: 14px;
+    }
+
+    .input-box i{
+        right: 15px;
+        font-size: 18px;
+    }
+
+    .btn{
+        height: 42px;
+        font-size: 14px;
+    }
+
     .toggle-box::before{
         left: 0;
         top: -270%;
@@ -213,6 +232,15 @@ form{ width: 100%; }
 
 @media screen and (max-width: 400px){
     .form-box { padding: 20px; }
+
+    .input-box{
+        margin: 6px 0;
+    }
+
+    .input-box input{
+        padding: 8px 35px 8px 12px;
+        font-size: 13px;
+    }
 
     .toggle-panel h1{font-size: 30px; }
 }
